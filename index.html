@@ -122,6 +122,22 @@ span{
 
     float: left; /* add this */
 }
+p{
+   
+  -webkit-animation-name: run;
+  -webkit-animation-duration: 1s;
+}
+@-webkit-keyframes run {
+  0% {
+    margin-left: 0;
+  }
+  50% { 
+    margin-left: calc(100% - 100px); 
+   }
+  100% {
+    margin-left: 0;     
+  }
+}
 </style>
 
 
