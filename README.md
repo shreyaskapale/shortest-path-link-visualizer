@@ -1,7 +1,7 @@
 # shortest-path-link-visualizer
 shortest path visualiser for connections
 
-- [Click here for demo](https://shreyaskapale.github.io/shortest-path-link-visualizer/) - HTML
+- [Click here for demo](https://shreyaskapale.github.io/shortest-path-link-visualizer/)
 
 
 #
