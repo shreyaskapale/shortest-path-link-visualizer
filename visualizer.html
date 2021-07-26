@@ -1,0 +1,555 @@
+<style>
+
+	:root {
+  --grid-cols: 1;
+  --grid-rows: 1;
+}
+
+#container {
+  display: grid;
+  grid-gap: 0px;
+  grid-template-rows: repeat(var(--grid-rows), 0fr);
+  grid-template-columns: repeat(var(--grid-cols), 0fr);
+  font-size: 10px;
+  background-color: black;
+
+  color: white
+}
+
+.grid-item {
+  padding: 5px;
+border: solid;
+border-color: white;
+border-width: 0.5;
+  text-align: center;
+  background: #fff;
+
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+ 
+}
+
+
+.bs-example {
+   margin-top: 10%;
+}
+
+.bs-example2 {
+   margin-top: 1.5em;
+   font-weight: bold;
+   font-size: 1.25em;
+   color: #FFF;
+   text-shadow: 1.25px 1px #25282a;
+}
+/* NONE OF THE FOLLOWING CSS IS NEEDED */
+
+[data-tooltip] {
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+}
+
+/* Hide the tooltip content by default */
+[data-tooltip]:before,
+[data-tooltip]:after {
+  visibility: hidden;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Position tooltip above the element */
+[data-tooltip]:before {
+  position: absolute;
+  bottom: 150%;
+  left: 50%;
+  margin-bottom: 5px;
+  margin-left: -80px;
+  padding: 7px;
+  width: 160px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #000;
+  background-color: hsla(0, 0%, 20%, 0.9);
+  color: #fff;
+  content: attr(data-tooltip);
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+/* Triangle hack to make tooltip look like a speech bubble */
+[data-tooltip]:after {
+  position: absolute;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -5px;
+  width: 0;
+  border-top: 5px solid #000;
+  border-top: 5px solid hsla(0, 0%, 20%, 0.9);
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+  content: " ";
+  font-size: 0;
+  line-height: 0;
+}
+
+/* Show tooltip content on hover */
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after {
+  visibility: visible;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+}
+span{
+   font-size: 16;
+}
+
+
+#wrapper {
+    
+    border: 1px solid black;
+    overflow: hidden; /* add this to contain floated children */
+}
+#container {
+    
+    float:left; /* add this */
+    border: 1px solid black;
+}
+#sidepane {
+
+    float: left; /* add this */
+}
+</style>
+
+
+<html>
+
+   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+
+
+   <button onclick="starts();">Build Tree</button>
+<div style="display: none;">
+
+<input id="qx"> 
+top<input id="top">
+bottom<input id="bottom">
+left<input id="left">
+right<input id="right">
+TL<input id="topleft">
+TR<input id="topright">
+BL<input id="bottomleft">
+BR<input id="bottomright">
+A<input id="A">
+B<input id="B">
+<button onclick="fp()"> FIND PATH </button>
+
+</div>
+
+
+
+
+
+
+<div id="wrapper">
+
+
+<div id="container" ></div>
+<div id="sidepane" style="padding:50px"></div>
+
+</div>
+
+<p id="pop"></p>
+
+
+</html>
+
+<script>
+
+var names_set = {"1":"Gabrielle","2":"Flossie","3":"Dorothea","4":"June","5":"Otilia","6":"Orion","7":"Jolie","8":"Katharina","9":"Lorenza","10":"Rosanna","11":"Jordy","12":"Anibal","13":"Marquise","14":"Lue","15":"Rossie","16":"Edmond","17":"Lexie","18":"Austyn","19":"Casimir","20":"Mallory","21":"Vincent","22":"Elna","23":"Theo","24":"Velda","25":"Candelario","26":"Euna","27":"Hilario","28":"Emmalee","29":"Bud","30":"Mae","31":"Krystal","32":"Dejon","33":"Celestine","34":"Claud","35":"Kenny","36":"Garland","37":"Hilario","38":"Carleton","39":"Eloy","40":"Doris","41":"Kathryne","42":"Cyril","43":"Nicholas","44":"Barrett","45":"Tierra","46":"Laurel","47":"Emie","48":"Amelie","49":"Orland","50":"Citlalli","51":"Dulce","52":"Eileen","53":"Lyla","54":"Sydnie","55":"Rogers","56":"Geraldine","57":"Kiera","58":"Juston","59":"Brycen","60":"Reva","61":"Jacques","62":"Verlie","63":"Wade","64":"Wyman","65":"Ada","66":"Bailey","67":"Broderick","68":"Jose","69":"Erika","70":"Shemar","71":"Raymundo","72":"Isai","73":"Tyreek","74":"Benedict","75":"Estevan","76":"Willie","77":"Pablo","78":"Kieran","79":"Maynard","80":"Amanda","81":"Emmitt","82":"Krystina","83":"Ryleigh","84":"Olga","85":"Virgil","86":"Tony","87":"Justus","88":"Emile","89":"Christine","90":"Cesar","91":"Nyah","92":"Brooks","93":"Darrell","94":"Aiyana","95":"Milford","96":"Shaina","97":"Kadin","98":"Abbigail","99":"Deontae","100":"Anthony","101":"Gilberto","102":"Soledad","103":"Gladys","104":"Ella","105":"Samanta","106":"Brett","107":"Demond","108":"Molly","109":"Bryana","110":"Mckenna","111":"Kaylie","112":"Blanche","113":"Stephan","114":"Korbin","115":"Mohammad","116":"Beverly","117":"Toni","118":"Bessie","119":"Eula","120":"Lyla","121":"Domenica","122":"Meaghan","123":"Maymie","124":"Raheem","125":"Leon","126":"Murl","127":"Shawna","128":"Adrianna","129":"Adriel","130":"Maude","131":"Dustin","132":"Geraldine","133":"Oswaldo","134":"Nickolas","135":"Cameron","136":"Lucious","137":"Will","138":"Jovanny","139":"Josefa","140":"Herminia","141":"Rupert","142":"Ayla","143":"Torey","144":"Isai","145":"Joe","146":"Hubert","147":"Efrain","148":"Edythe","149":"Bernardo","150":"Claudia","151":"Queen","152":"Anibal","153":"Ahmad","154":"Clementina","155":"Abe","156":"Brycen","157":"Darlene","158":"Raven","159":"Madelyn","160":"Annalise","161":"Lincoln","162":"Garnet","163":"Javier","164":"Antonette","165":"Maximillian","166":"April","167":"Damon","168":"Sydni","169":"Christina","170":"Vladimir","171":"Tyrel","172":"Meaghan","173":"Ruth","174":"Miles","175":"Nellie","176":"Micaela","177":"Yessenia","178":"Amiya","179":"Ophelia","180":"Ward","181":"Abigale","182":"Cletus","183":"Pearl","184":"Jillian","185":"Lamar","186":"Shanna","187":"Jammie","188":"Daisha","189":"Lola","190":"Catharine","191":"Junius","192":"Bridgette","193":"Lucious","194":"Shaina","195":"Zion","196":"Garnet","197":"Magdalena","198":"Cleo","199":"Chelsea","200":"Idella","201":"Monroe","202":"Howard","203":"Boyd","204":"Danny","205":"Maximilian","206":"Reta","207":"Layla","208":"Allene","209":"August","210":"Heloise","211":"Tyra","212":"Berta","213":"Wellington","214":"Leatha","215":"Alessandra","216":"Carissa","217":"Waldo","218":"Elmore","219":"Freida","220":"Brady","221":"Mavis","222":"Ozella","223":"Terry","224":"Fletcher","225":"Laverne","226":"Ivy","227":"Nestor","228":"Raheem","229":"Brandon","230":"Dion","231":"Lemuel","232":"Tiffany","233":"Sonia","234":"Billy","235":"Weston","236":"Ida","237":"Verlie","238":"Jolie","239":"Beryl","240":"Otho","241":"Dawn","242":"Camden","243":"Emelia","244":"Hershel","245":"Serenity","246":"Keaton","247":"Keegan","248":"Dennis","249":"Susie","250":"Brenda","251":"Efren","252":"Danny","253":"Colin","254":"Art","255":"Henri","256":"Kameron","257":"Emmet","258":"Rosendo","259":"Ross","260":"Osbaldo","261":"Wellington","262":"Russel","263":"Maiya","264":"Florencio","265":"Simeon","266":"Oda","267":"Velva","268":"Aiyana","269":"Joshua","270":"Armando","271":"Annetta","272":"Roselyn","273":"Coy","274":"Meredith","275":"Luis","276":"Macey","277":"Darrin","278":"Desiree","279":"Antone","280":"Letitia","281":"London","282":"Marlon","283":"Archibald","284":"Keara","285":"Mariana","286":"Perry","287":"Carey","288":"Nicholaus","289":"Connie","290":"Linnea","291":"Tiana","292":"Alysa","293":"Shaina","294":"Elta","295":"Oscar","296":"Bo","297":"Janessa","298":"Alena","299":"Adolf","300":"Melyssa","301":"Belle","302":"Sabina","303":"Leon","304":"Concepcion","305":"Linnie","306":"Jorge","307":"Woodrow","308":"Catalina","309":"Pierre","310":"Malika","311":"Martina","312":"Cielo","313":"Armand","314":"Adella","315":"Orlando","316":"Rosendo","317":"Kaitlin","318":"Samir","319":"Yesenia","320":"Gertrude","321":"Zoila","322":"Elfrieda","323":"Nyasia","324":"Jesus","325":"Danyka","326":"Gerry","327":"Milton","328":"Skye","329":"Maxime","330":"Rosalee","331":"Keshaun","332":"Elody","333":"Mortimer","334":"Aric","335":"Kailyn","336":"Meggie","337":"Pete","338":"Katherine","339":"Rylan","340":"Milford","341":"Chad","342":"Graciela","343":"Carter","344":"Elsa","345":"Dana","346":"Monty","347":"Destini","348":"Sim","349":"Kiarra","350":"Zoe","351":"Verna","352":"Kraig","353":"Rosanna","354":"Cynthia","355":"Lorena","356":"Suzanne","357":"Katrina","358":"Joshuah","359":"Ike","360":"Ena","361":"Syble","362":"Arno","363":"Axel","364":"Elnora","365":"Chadd","366":"Izaiah","367":"Baylee","368":"Malvina","369":"Gerda","370":"Hector","371":"Ubaldo","372":"Jewel","373":"Dereck","374":"Alena","375":"Ryann","376":"Markus","377":"Andres","378":"Augusta","379":"Alessia","380":"Joel","381":"Vince","382":"Cesar","383":"Carleton","384":"Adam","385":"Aisha","386":"Lia","387":"Henderson","388":"Jarret","389":"Susana","390":"Brice","391":"Dion","392":"Dana","393":"Candida","394":"Jay","395":"Troy","396":"Ismael","397":"Monty","398":"Kaden","399":"Vern","400":"Laron","401":"Opal","402":"Adelia","403":"Nick","404":"Sherwood","405":"Concepcion","406":"Jaeden","407":"Christelle","408":"Mac","409":"Marina","410":"Abdul","411":"Kyle","412":"Antwon","413":"Korbin","414":"Tracy","415":"Casey","416":"Kathlyn","417":"Rafaela","418":"Kody","419":"Benny","420":"Darron","421":"Carey","422":"Grady","423":"Leanna","424":"Charlene","425":"Theodora","426":"Waino","427":"Noel","428":"Jamison","429":"Brandy","430":"Ted","431":"Orrin","432":"Kristin","433":"Gloria","434":"Allison","435":"Eli","436":"Aditya","437":"Albert","438":"Marcelino","439":"Ardella","440":"Rhianna","441":"Rosa","442":"Trinity","443":"Loren","444":"Ottis","445":"Vida","446":"Liliane","447":"Wilson","448":"Lura","449":"Sydney","450":"Mariano","451":"Doyle","452":"Noemi","453":"Alexandria","454":"Garfield","455":"Lauretta","456":"Steve","457":"Aglae","458":"Jamie","459":"Sigurd","460":"Katharina","461":"Alessia","462":"Brandyn","463":"Fausto","464":"Sonia","465":"Eldon","466":"Lucienne","467":"Josefa","468":"Everardo","469":"Lewis","470":"Amalia","471":"Rashawn","472":"Augusta","473":"Gerald","474":"Bridie","475":"Dashawn","476":"Pamela","477":"Kyle","478":"Saul","479":"Guillermo","480":"Claire","481":"Summer","482":"Mohamed","483":"Hattie","484":"Victor","485":"Brenna","486":"Leon","487":"Donald","488":"Annie","489":"Maida","490":"Ladarius","491":"Mona","492":"Kristina","493":"Joaquin","494":"Pierre","495":"Frances","496":"Avis","497":"Alexie","498":"Travis","499":"Jaycee","500":"Ellie","501":"Erling","502":"Rachelle","503":"Margarita","504":"Rose","505":"Therese","506":"Violette","507":"Destin","508":"Abdul","509":"Cydney","510":"Roman","511":"Ollie","512":"Kenny","513":"Colby","514":"Lolita","515":"Alyson","516":"Blair","517":"Carlos","518":"Halie","519":"Shania","520":"Ibrahim","521":"Jacky","522":"Keeley","523":"Iva","524":"Angel","525":"Missouri","526":"Maryam","527":"Karlie","528":"Garnet","529":"Milford","530":"Herminio","531":"Magnus","532":"Jonas","533":"Verner","534":"Rosalinda","535":"Jayme","536":"Austin","537":"Casey","538":"Ron","539":"Oran","540":"Darren","541":"Garrick","542":"Jovany","543":"Eliane","544":"Denis","545":"Syble","546":"Edgardo","547":"Ali","548":"Jerrold","549":"Dejuan","550":"Terrill","551":"Evie","552":"Ibrahim","553":"Rocky","554":"Cleora","555":"Theresa","556":"Carlie","557":"Mariam","558":"Joany","559":"Lexus","560":"Shanel","561":"Nyasia","562":"Julian","563":"Jarrod","564":"Ari","565":"Trenton","566":"Molly","567":"Lera","568":"Isabelle","569":"Ana","570":"Hilda","571":"Elvie","572":"Jaclyn","573":"Meta","574":"Neoma","575":"Joesph","576":"Augustine","577":"Alanna","578":"Minnie","579":"Freida","580":"Ole","581":"Zena","582":"Jaime","583":"Shawna","584":"Christa","585":"Garrick","586":"Blaze","587":"Isadore","588":"Marian","589":"Mattie","590":"Tristian","591":"Muhammad","592":"Marlon","593":"Kyler","594":"Demond","595":"Jasmin","596":"Fannie","597":"Ericka","598":"Nannie","599":"Christian","600":"Katheryn","601":"Houston","602":"Justina","603":"Arturo","604":"Maribel","605":"Alivia","606":"Hal","607":"Katlyn","608":"Beverly","609":"Jonathan","610":"Roel","611":"Herbert","612":"Sonia","613":"Jensen","614":"Luz","615":"Wyatt","616":"Hellen","617":"Jaden","618":"Furman","619":"Vena","620":"Lambert","621":"Antone","622":"Erica","623":"Greyson","624":"Moises","625":"Margie","626":"Kale","627":"Davin","628":"Kaelyn","629":"Russ","630":"Royal","631":"Jeanette","632":"Brett","633":"Hollis","634":"Shanie","635":"Zetta","636":"Keara","637":"Maxie","638":"Bailey","639":"Vito","640":"Lenora","641":"Opal","642":"Pearline","643":"Kade","644":"Jaeden","645":"Maxine","646":"Helmer","647":"Pete","648":"Rocky","649":"Jabari","650":"Devonte","651":"Emory","652":"Eden","653":"Kian","654":"Verlie","655":"Kory","656":"Katelyn","657":"Shanelle","658":"Bo","659":"Claude","660":"Rosetta","661":"Nels","662":"Gudrun","663":"Alexane","664":"Marquise","665":"Lyric","666":"Silas","667":"Nedra","668":"Florence","669":"Lonny","670":"Nathan","671":"Janie","672":"Clinton","673":"Floy","674":"Shad","675":"Wilson","676":"Malachi","677":"Yadira","678":"Erika","679":"Rachelle","680":"Mya","681":"Litzy","682":"Horace","683":"Jarret","684":"Aurore","685":"Octavia","686":"Vivian","687":"Dewitt","688":"Kelli","689":"Isabelle","690":"Delta","691":"Mikel","692":"Filiberto","693":"Emmitt","694":"Joshua","695":"Catherine","696":"Fredy","697":"Loren","698":"Maryse","699":"Rory","700":"Emmie","701":"Mckayla","702":"Oleta","703":"Otha","704":"Lucious","705":"Isabel","706":"Mackenzie","707":"Mayra","708":"Gregory","709":"Melvina","710":"Trevor","711":"Savanah","712":"Morton","713":"Granville","714":"Icie","715":"Katherine","716":"Jarvis","717":"Ben","718":"Kayli","719":"Diana","720":"Evalyn","721":"Shaun","722":"Lonie","723":"Jessika","724":"Nicole","725":"Gennaro","726":"Lonnie","727":"Devante","728":"Jacklyn","729":"Antonetta","730":"Domenica","731":"Robert","732":"Devante","733":"Vicente","734":"Pansy","735":"Tess","736":"Holly","737":"Ezra","738":"Zakary","739":"Armand","740":"Coy","741":"Willis","742":"Javier","743":"Nickolas","744":"Dixie","745":"Maximo","746":"Andres","747":"Erling","748":"Creola","749":"Name","750":"Brooks","751":"Rozella","752":"Aaliyah","753":"Gertrude","754":"Timmy","755":"Linwood","756":"Richmond","757":"Violette","758":"Barbara","759":"Lavada","760":"Kaya","761":"Dorothy","762":"Trever","763":"Fred","764":"Michaela","765":"Dandre","766":"Armand","767":"Eliseo","768":"Arno","769":"Trevion","770":"Kevon","771":"Austin","772":"Aida","773":"Max","774":"Jayden","775":"Serenity","776":"Oren","777":"Lilyan","778":"Clifford","779":"Victoria","780":"Frieda","781":"Vivianne","782":"Benjamin","783":"Enos","784":"Esta","785":"Collin","786":"Leonora","787":"Burnice","788":"Roosevelt","789":"Cade","790":"Devyn","791":"Heaven","792":"Ali","793":"Esther","794":"Demarco","795":"Bennett","796":"Dawn","797":"Flavie","798":"Keyshawn","799":"Treva","800":"Stone","801":"Amiya","802":"Johnathan","803":"Kendra","804":"Destiney","805":"Randy","806":"Burdette","807":"Conor","808":"Hettie","809":"Catalina","810":"Precious","811":"Denis","812":"Hunter"}
+var faces = ["","&#128103;","&#128105;","&#128102;","&#129489;","&#129492;"]
+
+var adj_list = {}
+var clickCount = 0
+const container = document.getElementById("container");
+
+function makeRows(rows, cols) {
+  container.style.setProperty('--grid-rows', rows);
+  container.style.setProperty('--grid-cols', cols);
+  for (c = 0; c < (rows * cols); c++) {
+    let cell = document.createElement("div");
+    let rndInt = Math.floor(Math.random() * 5) + 1
+
+
+   //  let user = '<span  data-tooltip="'+names_set[c+1]+'">'+faces[rndInt]+'</span>'
+
+    let user = `<span data-tooltip='${names_set[c+1]}' name='${names_set[c+1]}'>${faces[rndInt]}</span>`
+    
+    cell.innerHTML = user
+    cell.id = c+1
+    cell.data
+    cell.onclick = function(){
+    	if(clickCount == 0){
+
+    	document.getElementById("A").value = this.id.toString();
+    	document.getElementById(this.id.toString()).style.backgroundColor="blue"
+    	clickCount = 1
+    } else{
+    	document.getElementById("B").value = this.id.toString();
+    	document.getElementById(this.id.toString()).style.backgroundColor="red"
+    	clickCount = 0 
+    	fp()
+
+
+    }
+    }
+    cell.addEventListener("touchstart", function() {document.getElementById("qx").value = this.id.toString();coordinate();}, true);
+   
+    container.appendChild(cell).className = "grid-item";
+  };
+};
+
+makeRows(29, 28);
+
+function coordinate(){
+
+	// for(i=1;i<813;i++)
+	// {
+	// 	document.getElementById(i).style.backgroundColor = "black";
+	// }
+	
+ qx = parseInt(document.getElementById("qx").value);
+let vcount = 0;
+let curr = qx	;
+	let x = qx;
+	while(curr>=29)
+	{
+		curr-=28
+		vcount+=1;
+	}
+  
+    
+	let f = 28-curr;
+	let mx = x + f;
+	let lx = x - curr + 1;
+
+var l = lx;
+
+
+
+
+	while(l < x-1)
+	{
+
+	document.getElementById(l.toString()).style.backgroundColor = "white";
+	document.getElementById((l+1).toString()).style.backgroundColor = "green";
+		l+=1;
+		
+	}
+	document.getElementById("left").value = l
+
+
+
+
+var m = mx;
+
+	while(m > x+1)
+	{
+			document.getElementById(m.toString()).style.backgroundColor = "white";
+	document.getElementById((m-1).toString()).style.backgroundColor = "yellow";
+		m-=1;
+			
+	} 
+		document.getElementById("right").value = m
+
+
+vlen =  29 - vcount;
+let ly = curr; 
+let my = x;
+for (i = 0; i < vlen-1; i++) {
+  my+=28
+  } 
+
+
+
+let vl = ly;
+
+
+	while(vl < x-28)
+	{
+
+	document.getElementById(vl.toString()).style.backgroundColor = "white";
+	document.getElementById((vl+28).toString()).style.backgroundColor = "blue";
+		vl+=28;
+			
+	} 
+		document.getElementById("top").value = vl
+		document.getElementById("topleft").value = vl-1
+		if(vl%28 != 0){
+		document.getElementById("topright").value = vl+1
+	}
+
+let ml = my;
+
+
+	while(ml > x+28)
+	{
+
+	document.getElementById(ml.toString()).style.backgroundColor = "white";
+	document.getElementById((ml-28).toString()).style.backgroundColor = "red";
+		ml-=28;
+
+	} 
+	document.getElementById("bottom").value = ml
+	document.getElementById("bottomleft").value = ml-1
+	if(ml% 28 !=0){
+	document.getElementById("bottomright").value = ml+1
+	}
+
+// let tempIds = ['left','top','right','bottom']
+// tempList = []
+
+// for (let cd of tempIds) {
+// 				tempList.push(document.getElementById(cd).value.toString())
+// 			}
+// console.log(tempList)
+
+}
+var count = 0
+var tempIds = ['left','topleft','top','topright','right','bottomright','bottom','bottomleft',]
+var connectionData = {}
+
+
+function starts(){
+
+
+
+while(count < 812){
+
+
+				count= count + 1
+			document.getElementById("qx").value = count.toString()
+			coordinate();
+			tempList = []
+			for (let cd of tempIds) {
+				tempList.push(document.getElementById(cd).value.toString())
+			}
+			connectionData[count.toString()] = tempList
+					
+			console.log(connectionData)
+
+		
+
+}
+
+//document.getElementById('pop').innerHTML = JSON.stringify(connectionData)
+adj_list = connectionData
+alert("tree built")
+
+}
+
+function findPath(a,b)
+{
+   document.getElementById('sidepane').innerHTML=''
+
+class Queue {
+   constructor(maxSize) {
+   
+      if (isNaN(maxSize)) {
+         maxSize = 100;
+      }
+      this.maxSize = maxSize;
+     
+      this.container = [];
+    }
+  
+   display() {
+      console.log(this.container);
+   }
+   isEmpty() {
+      return this.container.length === 0;
+   }
+
+   isFull() {
+      return this.container.length >= this.maxSize;
+   }
+   enqueue(element) {
+
+      if (this.isFull()) {
+         console.log("Queue Overflow!"); return;
+      }
+      
+      this.container.push(element);
+   }
+   dequeue() {
+     
+      if (this.isEmpty()) {
+         console.log("Queue Underflow!");
+         return;
+      }
+      return this.container.shift();
+   }
+   peek() {
+      if (this.isEmpty()) {
+         console.log("Queue Underflow!");
+         return;
+      }
+      return this.container[0];
+   }
+   clear() {
+      this.container = [];
+   }
+}
+
+    visited = {}
+    parent = {}
+    level = {}
+    bfs_traversal_output = []
+    let queue = new Queue()
+
+    for (var node of Object.keys(adj_list)) {
+        visited[node] = false
+        parent[node] = null
+        level[node] = -1
+    }
+    s = a
+    visited[s] = true
+    level[s] = 0
+    queue.enqueue(s)
+    while(!queue.isEmpty()){
+        u = queue.dequeue()
+        bfs_traversal_output.push(u)
+        for(let v of adj_list[u]){
+            if(visited[v]==false){
+                visited[v] = true
+                parent[v] = u
+                level[v] = level[u] + 1
+                queue.enqueue(v)
+
+            }
+        }
+    }
+
+let v = b
+path = []
+while(v!=null){
+    path.push(v)
+    v = parent[v]
+}
+path.reverse()
+
+
+// function setTile(i){
+// document.getElementById((i).toString()).style.backgroundColor = "yellow";
+
+// }
+
+
+
+
+t = "This is the shortest connection path to connect this person" 
+document.getElementById('sidepane').append(t);
+
+
+
+let cc = 1
+document.getElementById((path[0]).toString()).style.backgroundColor = "blue";
+
+
+
+
+
+
+name = names_set[path[0]]
+pic = document.getElementById((path[0]).toString()).textContent
+let z = document.createElement('p'); // is
+z.innerHTML="&#8681; "+pic+" "+ name
+z.id="p"+path[0].toString()
+      document.getElementById('sidepane').appendChild(z);
+       lastP = "p"+path[0].toString()
+       document.getElementById(lastP).style.borderStyle = "solid";
+       document.getElementById(lastP).style.borderColor = "green";
+
+
+var poc = setInterval(function(){
+	document.getElementById((path[cc]).toString()).style.backgroundColor = "grey";
+   name = names_set[path[cc]]
+
+   pic = document.getElementById((path[cc]).toString()).textContent
+   let z = document.createElement('p'); // is a node
+   z.innerHTML="&#8681; "+pic+" "+ name
+   z.id="p"+path[cc].toString()
+      document.getElementById('sidepane').appendChild(z);
+
+
+      
+
+				cc= cc + 1
+			
+
+       if (cc === path.length) {
+           window.clearInterval(poc);
+
+document.getElementById((path[path.length-1]).toString()).style.backgroundColor = "red";
+
+       lastP = "p"+path[path.length-1].toString()
+       document.getElementById(lastP).style.borderStyle = "solid";
+       document.getElementById(lastP).style.borderColor = "red";
+       
+
+
+
+
+       }
+
+
+	},10);
+
+
+
+
+// for( i of path){
+// 		setTimeout(setTile(i),1000);
+// }
+
+console.log(path)   
+
+
+
+}
+
+function fp(){
+
+for(i=1;i<813;i++)
+	{
+		document.getElementById(i).style.backgroundColor = "white";
+	}
+
+
+	let p =document.getElementById("A").value
+	let q = document.getElementById("B").value
+	findPath(p,q);
+}
+
+
+
+
+
+
+
+
+</script>
+<script>
+   $(document).ready(function() {
+   $('[data-toggle="popover"]').popover({
+      placement: 'top',
+      trigger: 'hover'
+   });
+});
+</script>
